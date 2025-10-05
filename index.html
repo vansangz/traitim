@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trung Thu Lung Linh</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: radial-gradient(circle at center, #000010, #000);
+        height: 100vh;
+        perspective: 1000px;
+        cursor: crosshair;
+      }
+
+      /* Nền sao lấp lánh */
+      .star {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        animation: sparkle 2s infinite;
+        opacity: 0.8;
+      }
+
+      @keyframes sparkle {
+        0%,
+        100% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      /* Sao băng */
+      .shooting-star {
+        position: absolute;
+        width: 2px;
+        height: 80px;
+        background: linear-gradient(white, rgba(255, 255, 255, 0));
+        border-radius: 50%;
+        opacity: 0.8;
+        transform: rotate(45deg);
+        animation: shoot 1s linear forwards;
+      }
+
+      @keyframes shoot {
+        0% {
+          transform: translate(0, 0) rotate(45deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(400px, 400px) rotate(45deg);
+          opacity: 0;
+        }
+      }
+
+      .scene {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 0.3s ease;
+      }
+
+      /* Chữ rơi */
+      .text {
+        position: absolute;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #ff99cc;
+        font-family: "Comic Sans MS", cursive;
+        font-size: 28px;
+        text-shadow: 0 0 15px #ff66cc, 0 0 25px #ffb6c1;
+        animation: fall 2.8s linear forwards;
+      }
+
+      @keyframes fall {
+        0% {
+          top: -100px;
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        100% {
+          top: 100%;
+          opacity: 0;
+        }
+      }
+
+      /* Ảnh & icon rơi */
+      .falling-item {
+        position: absolute;
+        top: -100px;
+        width: 90px;
+        height: 90px;
+        object-fit: contain;
+        filter: drop-shadow(0 0 10px pink);
+        animation: fall-img 4s linear forwards;
+      }
+
+      @keyframes fall-img {
+        0% {
+          transform: translateY(0);
+          opacity: 0;
+        }
+        15% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scene" id="scene"></div>
+
+    <script>
+      // 🌟 Sao nền
+      for (let i = 0; i < 150; i++) {
+        const star = document.createElement("div");
+        star.className = "star";
+        star.style.top = Math.random() * 100 + "%";
+        star.style.left = Math.random() * 100 + "%";
+        star.style.animationDelay = Math.random() * 2 + "s";
+        document.body.appendChild(star);
+      }
+
+      // 🌠 Sao băng
+      function createShootingStar() {
+        const star = document.createElement("div");
+        star.className = "shooting-star";
+        star.style.top = Math.random() * window.innerHeight * 0.5 + "px";
+        star.style.left = Math.random() * window.innerWidth * 0.8 + "px";
+        document.body.appendChild(star);
+        setTimeout(() => star.remove(), 1000);
+      }
+      setInterval(createShootingStar, 1800);
+
+      const scene = document.getElementById("scene");
+
+      const messages = [
+        "Chúc Hin Trung Thu vui vẻ 💖",
+        "Mãi là công chúa xinh đẹp nhất nha 👸",
+        "Mãi iu 💞",
+      ];
+
+      const imageSources = [
+        "https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/479512732_639137865281370_270842019173640660_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=f727a1&_nc_ohc=RKPDc2Uvw2MQ7kNvwH_L6kd&_nc_oc=AdkHSEpoCG-5xlGUAh4RUgXUaWdd9B92uHdcM2EHpgCNa8Q5sAS1ExqbcAojpug6veE&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=Uu8Vjz2ih2tOb6KbzWeJzA&oh=00_AfcR_9_n0YjX8DqusUoLf8oevElvyePtR32BmDOXQf4iBg&oe=68E7DBFB",
+        "https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/528228022_767442089117613_5152285676123428879_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=h3rZb2zYK7oQ7kNvwEhDOe9&_nc_oc=AdnHx0lcgvo_lrUYRVtsl-UP9LIjAZSeGU2hjGWB3JBqLVsxDUdM4taonT-O6CDp7So&_nc_zt=23&_nc_ht=scontent.fsgn5-5.fna&_nc_gid=KFEjmiOFYdk9KGnAY3lLRQ&oh=00_AfeROXaW_95jgsDevL35WRkkwpWqbsZjeaAa52L6FnWjoA&oe=68E7F182",
+        "https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/528388362_767442019117620_5217789678301802673_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=18qzAeCUGCgQ7kNvwF7tQ_O&_nc_oc=AdkoAazuoftm8yNYVcED8S8WUY5vZeOmcRlo_Bct-32kkoFG0I9BQpvkGjcrEB1hGMI&_nc_zt=23&_nc_ht=scontent.fsgn5-5.fna&_nc_gid=8MI3CkNANukGv1hoKQvO1A&oh=00_Afdxj29P3mPYA-RlboZlTbilvbTL70QxyYccdYCE8T8xEA&oe=68E7F034",
+      ];
+
+      const lanternIcons = ["🏮", "🏮", "🏮", "🏮"];
+
+      // 💬 Tạo chữ rơi
+      function createFallingText() {
+        for (let i = 0; i < 3; i++) {
+          const text = document.createElement("div");
+          text.className = "text";
+          text.innerText =
+            messages[Math.floor(Math.random() * messages.length)];
+          text.style.left = Math.random() * 85 + 5 + "%";
+          text.style.animationDuration = 2 + Math.random() * 1.5 + "s";
+          scene.appendChild(text);
+          setTimeout(() => text.remove(), 4000);
+        }
+      }
+      setInterval(createFallingText, 700);
+
+      // 🖼️ Ảnh & lồng đèn rơi
+      function createFallingItem() {
+        for (let i = 0; i < 3; i++) {
+          const item = document.createElement("div");
+          item.className = "falling-item";
+          item.style.left = Math.random() * (window.innerWidth - 100) + "px";
+          item.style.animationDuration = 3 + Math.random() * 2 + "s";
+
+          if (Math.random() < 0.5) {
+            const img = document.createElement("img");
+            img.src =
+              imageSources[Math.floor(Math.random() * imageSources.length)];
+            img.style.width = "100%";
+            img.style.height = "100%";
+            img.style.borderRadius = "10px";
+            item.appendChild(img);
+          } else {
+            item.textContent =
+              lanternIcons[Math.floor(Math.random() * lanternIcons.length)];
+            item.style.fontSize = "70px";
+            item.style.textAlign = "center";
+          }
+
+          scene.appendChild(item);
+          setTimeout(() => item.remove(), 6000);
+        }
+      }
+      setInterval(createFallingItem, 900);
+
+      // 🖱️ Di chuột -> nghiêng nhẹ khung cảnh
+      document.addEventListener("mousemove", (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 20;
+        const y = (e.clientY / window.innerHeight - 0.5) * 20;
+        scene.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+      });
+    </script>
+  </body>
+</html>
