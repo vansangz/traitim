@@ -14,7 +14,7 @@
         cursor: crosshair;
       }
 
-      /* Nền sao lấp lánh */
+      /* 🌟 Nền sao lấp lánh */
       .star {
         position: absolute;
         width: 2px;
@@ -35,7 +35,7 @@
         }
       }
 
-      /* Sao băng */
+      /* 🌠 Sao băng */
       .shooting-star {
         position: absolute;
         width: 2px;
@@ -66,7 +66,7 @@
         transition: transform 0.3s ease;
       }
 
-      /* Chữ rơi */
+      /* 💖 Chữ rơi */
       .text {
         position: absolute;
         top: -100px;
@@ -76,7 +76,7 @@
         font-family: "Comic Sans MS", cursive;
         font-size: 28px;
         text-shadow: 0 0 15px #ff66cc, 0 0 25px #ffb6c1;
-        animation: fall 2.8s linear forwards;
+        animation: fall 5.5s linear forwards; /* 👈 Chậm hơn */
       }
 
       @keyframes fall {
@@ -93,7 +93,7 @@
         }
       }
 
-      /* Ảnh & icon rơi */
+      /* 🏮 Ảnh & icon rơi */
       .falling-item {
         position: absolute;
         top: -100px;
@@ -101,7 +101,7 @@
         height: 90px;
         object-fit: contain;
         filter: drop-shadow(0 0 10px pink);
-        animation: fall-img 4s linear forwards;
+        animation: fall-img 6s linear forwards; /* 👈 cũng chậm hơn */
       }
 
       @keyframes fall-img {
@@ -123,7 +123,7 @@
     <div class="scene" id="scene"></div>
 
     <script>
-      // 🌟 Sao nền
+      // 🌟 Tạo nền sao lấp lánh
       for (let i = 0; i < 150; i++) {
         const star = document.createElement("div");
         star.className = "star";
@@ -160,7 +160,7 @@
 
       const lanternIcons = ["🏮", "🏮", "🏮", "🏮"];
 
-      // 💬 Tạo chữ rơi
+      // 💬 Chữ rơi chậm
       function createFallingText() {
         for (let i = 0; i < 3; i++) {
           const text = document.createElement("div");
@@ -168,12 +168,12 @@
           text.innerText =
             messages[Math.floor(Math.random() * messages.length)];
           text.style.left = Math.random() * 85 + 5 + "%";
-          text.style.animationDuration = 2 + Math.random() * 1.5 + "s";
+          text.style.animationDuration = 5 + Math.random() * 2 + "s"; // 👈 chậm 5–7s
           scene.appendChild(text);
-          setTimeout(() => text.remove(), 4000);
+          setTimeout(() => text.remove(), 8000); // 👈 giữ lâu hơn
         }
       }
-      setInterval(createFallingText, 700);
+      setInterval(createFallingText, 1000); // 👈 giãn tần suất xuất hiện
 
       // 🖼️ Ảnh & lồng đèn rơi
       function createFallingItem() {
@@ -181,7 +181,7 @@
           const item = document.createElement("div");
           item.className = "falling-item";
           item.style.left = Math.random() * (window.innerWidth - 100) + "px";
-          item.style.animationDuration = 3 + Math.random() * 2 + "s";
+          item.style.animationDuration = 5 + Math.random() * 2 + "s"; // 👈 mượt hơn
 
           if (Math.random() < 0.5) {
             const img = document.createElement("img");
@@ -199,10 +199,10 @@
           }
 
           scene.appendChild(item);
-          setTimeout(() => item.remove(), 6000);
+          setTimeout(() => item.remove(), 8000);
         }
       }
-      setInterval(createFallingItem, 900);
+      setInterval(createFallingItem, 1200);
 
       // 🖱️ Di chuột -> nghiêng nhẹ khung cảnh
       document.addEventListener("mousemove", (e) => {
